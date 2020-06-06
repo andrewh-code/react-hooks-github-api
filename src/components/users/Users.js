@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import UserItem from './UserItem';
 
+// move the users to the top level component (App) so that other components can work with it (through props)
 export class Users extends Component {
     
     state = {

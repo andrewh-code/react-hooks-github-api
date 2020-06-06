@@ -5,6 +5,13 @@ import Users from './components/users/Users';
 import './App.css';
 
 class App extends Component {
+  
+  // another lifecycle method
+  componentDidMount(){
+    // runs after the component output has been rednered to the DOM (good place to set up a timer)
+    console.log(123);
+  }
+
   render() {
     return (
       <div className='App'>
