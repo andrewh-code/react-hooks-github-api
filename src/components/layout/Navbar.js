@@ -2,6 +2,8 @@
 import React from 'react';
 // type checking
 import PropTypes from 'prop-types';
+// use curly braces because this is not the default export
+import { Link } from 'react-router-dom';
 
 
 // export class Navbar extends Component {
@@ -36,6 +38,17 @@ const Navbar = ({ icon, title }) => {
                 {/* font awesome icon */}
                 <i className={icon} /> { title }
             </h1>
+            <ul>
+                {/* want to use Link to instead of the anchor tag because by using the anchor tag, you refresh the page
+                when you go back home and the search results are wiped from the App.js's state which you don't want
+                in this situation */}
+                <li>
+                    <Link to='/'>Home</Link>
+                </li>
+                <li>
+                    <Link to='/about'>About</Link>
+                </li>
+            </ul>
         </div>
     )
 }
