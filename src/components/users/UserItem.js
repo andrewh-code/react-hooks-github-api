@@ -1,7 +1,7 @@
 // import React, { Component } from 'react'
 import React from 'react';
-import PropTypes from 'prop-types'
-
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 // class UserItem extends Component {
 
@@ -46,15 +46,18 @@ const UserItem = ({ user: { login, avatar_url, html_url }}) => {
         
         <div className="card text-center">
             {/* can use typical CSS to style the component but remember this is in JSX so it's a bit different */}
-            <img src = {avatar_url} 
+            <img src = { avatar_url } 
                     alt="" 
                     className="round-img" 
                     style={{ width: '60px'}}/>
-            <h3>{login}</h3>
+            <h3>{ login }</h3>
             <div>
-                <a href = {html_url} className = "btn btn-dark btn-sm my-1">
+                {/* <a href = { html_url } className = "btn btn-dark btn-sm my-1">
                     More
-                </a>
+                </a> */}
+                <Link to = { `/user/${login}` } className = 'btn btn-dark btn-sm my-1'>
+                    More
+                </Link>
             </div>
         </div>
     );
