@@ -16,7 +16,8 @@ class App extends Component {
     users: [],
     user: {},
     loading: false, 
-    alert: null
+    alert: null,
+    repos: []
   }
   // another lifecycle method
   // async componentDidMount(){
@@ -50,8 +51,15 @@ class App extends Component {
     this.setState({ user: res.data, loading: false });
   };
 
+  // get repos for user
   getUserRepos = async username => {
+    this.setState({ loading: true })
 
+    const res = await axios
+    .get(`https://api.github.com/users/${username}/repos?per_page=5&sort=created:asc&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
+    // after executing the GET request, set the state variable (user) to the res object
+    this.setState({ repos: res.data, loading: false });
+    
   }
   
   // clear users (from the state)
@@ -99,7 +107,7 @@ class App extends Component {
   //   );
 
   render() {
-    const { users, user, loading } = this.state;
+    const { users, user, repos, loading } = this.state;
     return (
       // putting multiple components inside a route, use switch
       <Router>
@@ -124,7 +132,13 @@ class App extends Component {
           {/* use exact path because it's only one/simple component */}
           <Route exact path='/about' component = { About } />
           <Route exact path='/user/:login' render = { props => (
-            <User { ...props } getUser = { this.getUser } user = { user } loading = { loading }/>
+            <User 
+            { ...props } 
+            getUser = { this.getUser }
+            getUserRepos = { this.getUserRepos }
+            user = { user } 
+            repos = { repos }
+            loading = { loading }/>
           )} />
           </Switch>
         </div>
