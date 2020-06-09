@@ -50,6 +50,10 @@ class App extends Component {
     this.setState({ user: res.data, loading: false });
   };
 
+  getUserRepos = async username => {
+
+  }
+  
   // clear users (from the state)
   clearUsers = () => {
     this.setState({
