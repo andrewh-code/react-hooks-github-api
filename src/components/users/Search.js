@@ -1,61 +1,62 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-export class Search extends Component {
+// deconstruct the props variable by passing them in as arguments to the functional component
+const Search = ({ searchUsers, showClear, clearUsers, setAlert }) => {
 
-    state = {
-        text: ''
-    }
+    // replace the this.state() with this
+    const [text, setText] = useState('');
 
-    static propTypes = {
-        searchUsers: PropTypes.func.isRequired,
-        clearUsers: PropTypes.func.isRequired,
-        showClear: PropTypes.bool.isRequired,
-        setAlert: PropTypes.func.isRequired
+    const onChange = e => {
+        setText(e.target.value);
     };
 
-    onChange = (e) => {
-        this.setState({ [e.target.name]: e.target.value })
-    }
-
-    // can set it up like a regular function, but you would always have to set .bind(this) at the end of each methdo call
-    onSubmit = (e) => {
+    // convert to a function within a function (use the const keyword)
+    const onSubmit = (e) => {
         e.preventDefault();
-        if (this.state.text === '') {
-            this.props.setAlert('Please enter something', 'light');
+        if (text === '') {
+            setAlert('Please enter something', 'light');
         } else {
-            this.props.searchUsers((this.state.text));
-            this.setState({ text: ''});
+            searchUsers(text);
+            setText('');
         }
     };
 
-    render() {
-        const { showClear, clearUsers } = this.props;
+    // render() does not exist in function componentes, only in classes
+    
+    // for functional component we do not need this anymopre
+    // const { showClear, clearUsers } = this.props;
+    return (
+        <div>
+            <form onSubmit = { onSubmit } className="form">
+                <input 
+                    type="text" 
+                    name="text" 
+                    placeholder="search..." 
+                    value = { text }
+                    onChange= { onChange }/>
 
-        return (
-            <div>
-                <form onSubmit = {this.onSubmit} className="form">
-                    <input 
-                        type="text" 
-                        name="text" 
-                        placeholder="search..." 
-                        value = { this.state.text }
-                        onChange= { this.onChange }/>
+                <input type="submit" 
+                        value="search" className = "btn btn-dark btn-block"/>
+            </form>
+            { showClear && (
+                <button 
+                    className = "btn btn-light btn-block" 
+                    onClick = { clearUsers }
+                >
+                    Clear
+                </button>
+            )}
+        </div>
+    );
 
-                    <input type="submit" 
-                            value="search" className = "btn btn-dark btn-block"/>
-                </form>
-                { showClear && (
-                    <button 
-                        className = "btn btn-light btn-block" 
-                        onClick = { clearUsers }
-                    >
-                        Clear
-                    </button>
-                )}
-            </div>
-        )
-    }
 }
 
-export default Search
+Search.propTypes = {
+    searchUsers: PropTypes.func.isRequired,
+    clearUsers: PropTypes.func.isRequired,
+    showClear: PropTypes.bool.isRequired,
+    setAlert: PropTypes.func.isRequired
+};
+
+export default Search;
