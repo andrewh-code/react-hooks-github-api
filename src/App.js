@@ -9,6 +9,7 @@ import axios from 'axios';
 import Search from './components/users/Search';
 import Alert from './components/layout/Alert';
 import About from './components/pages/About';
+import GithubState from './context/github/GithubState';
 
 const App = () => {
 
@@ -90,7 +91,10 @@ const App = () => {
   //     </Router>
   //   );
   return (
-    // putting multiple components inside a route, use switch
+    <GithubState>
+
+    
+    {/* // putting multiple components inside a route, use switch */}
     <Router>
         <div className='App'>
       {/* passing in title and icon as variables/parameters to the Navbar class */}
@@ -125,6 +129,7 @@ const App = () => {
       </div>
     </div>
     </Router>
+    </GithubState>
   );
 
 
