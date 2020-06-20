@@ -105,7 +105,7 @@ const App = () => {
         <Switch>
           <Route exact path ='/' render = { props => (
             <Fragment>
-              <Search searchUsers = { searchUsers } 
+              <Search 
                 clearUsers = { clearUsers } 
                 showClear = { users.length > 0 ? true : false } 
                 setAlert = { showAlert }
