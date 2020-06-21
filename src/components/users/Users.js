@@ -1,10 +1,15 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import UserItem from './UserItem';
 import Spinner from '../layout/Spinner';
-import PropTypes from 'prop-types';
+import GithubContext from '../../context/github/githubContext';
 
 // move the users to the top level component (App) so that other components can work with it (through props)
-const Users = ({ users, loading }) => {
+const Users = () => {
+    // now be able to use anything inside githubcontext
+    const githubContext = useContext(GithubContext);
+
+    const { loading, users } = githubContext;
+
     if (loading){
         return (
             <Spinner />
@@ -20,11 +25,6 @@ const Users = ({ users, loading }) => {
             </div>
         )
     }
-}
-
-Users.propTypes = {
-    users: PropTypes.array.isRequired,
-    loading: PropTypes.bool.isRequired
 }
 
 const userStyle = {
