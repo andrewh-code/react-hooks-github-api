@@ -5,7 +5,6 @@ import Navbar from './components/layout/Navbar';
 import Users from './components/users/Users';
 import User from './components/users/User';
 import './App.css';
-import axios from 'axios';
 import Search from './components/users/Search';
 import Alert from './components/layout/Alert';
 import About from './components/pages/About';
@@ -14,8 +13,6 @@ import GithubState from './context/github/GithubState';
 const App = () => {
 
   // create state by using useState
-  const [ repos, setRepos ] = useState([]);
-  const [ loading, setLoading ] = useState(false);
   const [ alert, setAlert ] = useState(null);
 
   // search for github users
@@ -27,18 +24,6 @@ const App = () => {
   // };
 
   // GET a specific github user
-  
-
-  // get repos for user
-  const getUserRepos = async username => {
-    setLoading(true);
-
-    const res = await axios
-    .get(`https://api.github.com/users/${username}/repos?per_page=5&sort=created:asc&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
-    // after executing the GET request, set the state variable (user) to the res object
-    setRepos(res.data);
-    setLoading(false);
-  };
   
   
   // set alert for if search is blank
@@ -100,15 +85,7 @@ const App = () => {
         />
         {/* use exact path because it's only one/simple component */}
         <Route exact path='/about' component = { About } />
-        <Route exact path='/user/:login' render = { props => (
-          <User 
-          { ...props } 
-          
-          getUserRepos = { getUserRepos }
-          
-          repos = { repos }
-          loading = { loading }/>
-        )} />
+        <Route exact path='/user/:login' component = { User } />
         </Switch>
       </div>
     </div>

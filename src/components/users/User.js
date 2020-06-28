@@ -5,9 +5,9 @@ import Repos from '../repos/Repos';
 import { Link } from 'react-router-dom';
 import GithubContext from '../../context/github/githubContext';
 
-const User = ({ getUserRepos, repos, match }) => {
+const User = ({ match }) => {
     const githubContext = useContext(GithubContext);
-    const { getUser, loading, user } = githubContext;
+    const { getUser, loading, user, repos, getUserRepos } = githubContext;
 
     // replace componentDidMount() to use useEffect functional component
     // when you make this change initially, you will notice in chrome that it will continue to execute
@@ -111,10 +111,5 @@ const User = ({ getUserRepos, repos, match }) => {
         </Fragment>
     );
 }
-
-User.propTypes = {
-    repos: PropTypes.array.isRequired,
-    getUserRepos: PropTypes.func.isRequired,
-};
 
 export default User
