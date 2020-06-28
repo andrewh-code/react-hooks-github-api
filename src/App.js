@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
 // import UserItem from './components/users/UserItem';
@@ -9,87 +9,37 @@ import Search from './components/users/Search';
 import Alert from './components/layout/Alert';
 import About from './components/pages/About';
 import GithubState from './context/github/GithubState';
+import AlertState from './context/alert/AlertState';
 
 const App = () => {
-
-  // create state by using useState
-  const [ alert, setAlert ] = useState(null);
-
-  // search for github users
-  // const searchUsers = async text => {
-  //   setLoading(true);
-  //   const res = await axios.get(`https://api.github.com/search/users?q=${text}&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
-  //   setUsers(res.data.items);
-  //   setLoading(false);
-  // };
-
-  // GET a specific github user
   
-  
-  // set alert for if search is blank
-  const showAlert = (msg, type) => {
-    setAlert({ msg, type });
-    // shwo the alert after a given amount of time (5 seconds)
-    setTimeout( () => setAlert(null), 5000);
-  };
-
-  // design before adding in routing
-  // render() {
-  //   const { users, loading } = this.state;
-  //   return (
-  //     // putting multiple components inside a route, use switch
-  //     <Router>
-  //         <div className='App'>
-  //       {/* passing in title and icon as variables/parameters to the Navbar class */}
-  //       {/* <Navbar title='Github Finder' icon='fab fa-github'/> */}
-  //       <Navbar />
-  //       <div className='container'>
-  //         <Alert alert = { this.state.alert }/>
-  //         <Switch>
-  //           <Route exact path ='/' render = { props => (
-  //             <Fragment>
-  //               <Search searchUsers = { this.searchUsers } 
-  //                 clearUsers = { this.clearUsers } 
-  //                 showClear = { users.length > 0 ? true : false } 
-  //                 setAlert = { this.setAlert }
-  //                 />
-  //         <Users loading = { loading } users = { users }/>
-  //             </Fragment>
-  //           )} />
-  //         </Switch>
-  //       </div>
-  //     </div>
-  //     </Router>
-  //   );
   return (
     <GithubState>
-
-    
-    {/* // putting multiple components inside a route, use switch */}
-    <Router>
-        <div className='App'>
-      {/* passing in title and icon as variables/parameters to the Navbar class */}
-      {/* <Navbar title='Github Finder' icon='fab fa-github'/> */}
-      <Navbar />
-      <div className='container'>
-        <Alert alert = { alert }/>
-        <Switch>
-          <Route exact path ='/' render = { props => (
-            <Fragment>
-              <Search 
-                setAlert = { showAlert }
-                />
-              <Users />
-            </Fragment>
-          )} 
-        />
-        {/* use exact path because it's only one/simple component */}
-        <Route exact path='/about' component = { About } />
-        <Route exact path='/user/:login' component = { User } />
-        </Switch>
-      </div>
-    </div>
-    </Router>
+      <AlertState>
+        {/* // putting multiple components inside a route, use switch */}
+        <Router>
+            <div className='App'>
+          {/* passing in title and icon as variables/parameters to the Navbar class */}
+          {/* <Navbar title='Github Finder' icon='fab fa-github'/> */}
+          <Navbar />
+          <div className='container'>
+            <Alert/>
+            <Switch>
+              <Route exact path ='/' render = { props => (
+                <Fragment>
+                  <Search />
+                  <Users />
+                </Fragment>
+              )} 
+            />
+            {/* use exact path because it's only one/simple component */}
+            <Route exact path='/about' component = { About } />
+            <Route exact path='/user/:login' component = { User } />
+            </Switch>
+          </div>
+        </div>
+        </Router>
+      </AlertState>
     </GithubState>
   );
 
